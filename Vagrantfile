@@ -1,3 +1,4 @@
+#Servidor DHCP
 Vagrant.configure("2") do |config|
   config.vm.define "server" do |srv|
     srv.vm.box = "debian/bullseye64"
@@ -9,4 +10,12 @@ Vagrant.configure("2") do |config|
       ip: "192.168.57.10",
       virtualbox__intnet: "intnet"
   end
+   # Cliente DHCP
+  config.vm.define "client" do |cli|
+  cli.vm.box = "debian/bullseye64"
+
+  cli.vm.provider "virtualbox" do |vb|
+    vb.customize ["modifyvm", :id, "--nic2", "intnet"]
+  end
+end
 end
